@@ -52,7 +52,8 @@ void draw() {
       }
     }
     
-    students.get(s).moveStud();
+    if (! students.get(s).losingIt)
+      students.get(s).moveStud();
   }
   
 }

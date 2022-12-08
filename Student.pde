@@ -5,7 +5,7 @@ class Student {
   int stressNow, stressMng, cashOnHand, popularity,
       xNow, yNow, xTrg, yTrg;
   ArrayList<Course> courseload;
-  boolean losingIt;
+  int losingIt;
   
   
   Student(int sM, int cOH, int p,
