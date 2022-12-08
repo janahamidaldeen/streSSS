@@ -134,10 +134,10 @@ class Student {
   void fight(Student that) {
     this.losingIt = that.losingIt = true;
     
-    this.xTrg = that.xNow;
-    this.yTrg = that.yNow;
-    that.xTrg = this.xNow;
-    that.yTrg = this.yNow;
+    this.xTrg = that.xTrg = this.xNow;
+    this.yTrg = that.yTrg = this.yNow;
+    fightX.add(this.xNow);
+    fightY.add(this.yNow);
     
     println("FIGHT");
     

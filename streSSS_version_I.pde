@@ -10,6 +10,8 @@ Store[] stores = new Store[5];
 
 ArrayList<Student> students = new ArrayList<Student>();
 int studRadius = 8;
+ArrayList<Integer> fightX = new ArrayList<Integer>(),
+                   fightY = new ArrayList<Integer>();
 
 
 void setup() {
@@ -20,7 +22,7 @@ void setup() {
   for (int s=0; s<studInfo.length; s++)
     students.add(makeStud(studInfo[s]));
   
- for (int s=0; s<5; s++)
+  for (int s=0; s<5; s++)
     stores[s] = new Store(round(random(10)), round(random(5, 20)), round(random(1, 25)));
     
   size(1000, 500);
@@ -39,6 +41,7 @@ void draw() {
     circle(students.get(s).xNow, students.get(s).yNow, 2*studRadius); 
     
     if (students.get(s).stressNow > 7) {
+      dangers.add(students.get(s));
       if (dangers.size() > 0) {
         for (int t=0; t<dangers.size(); t++) {
           if (students.get(s).xNow == dangers.get(t).xNow
@@ -47,7 +50,6 @@ void draw() {
           }
         }
       }
-      dangers.add(students.get(s));
     }
     
     students.get(s).moveStud();
