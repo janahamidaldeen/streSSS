@@ -9,19 +9,19 @@ Course[] courses = {math, science, languages, art, tech, gym};
 Store[] stores = new Store[5];
 
 ArrayList<Student> students = new ArrayList<Student>();
-int studRadius = 5;
+int studRadius = 8;
 
 
 void setup() {
   
-  writeStuds(250);
+  writeStuds(500);
   
   String[] studInfo = loadStrings("streSSS I students.txt");
   for (int s=0; s<studInfo.length; s++)
     students.add(makeStud(studInfo[s]));
   
  for (int s=0; s<5; s++)
-    stores[s] = new Store(round(random(0, 10)), round(random(10, 100)), round(random(1, 25)));
+    stores[s] = new Store(round(random(10)), round(random(5, 20)), round(random(1, 25)));
     
   size(1000, 500);
   
@@ -29,14 +29,26 @@ void setup() {
 
 
 void draw() {
-
   setScreen();
   
+  ArrayList<Student> dangers = new ArrayList<Student>();
+
   for (int s=0; s<students.size(); s++) {
-    int g = round(255 - 12.75*students.get(s).stressNow),
-        b = round(255 - 25.5*students.get(s).stressNow);
-    fill(255, g, b);
-    circle(students.get(s).xNow, students.get(s).yNow, 2*studRadius);
+    
+    fill(students.get(s).fillColNow());
+    circle(students.get(s).xNow, students.get(s).yNow, 2*studRadius); 
+    
+    if (students.get(s).stressNow > 7) {
+      if (dangers.size() > 0) {
+        for (int t=0; t<dangers.size(); t++) {
+          if (students.get(s).xNow == dangers.get(t).xNow
+              && students.get(s).yNow == dangers.get(t).yNow) {
+            students.get(s).fight(dangers.get(t));
+          }
+        }
+      }
+      dangers.add(students.get(s));
+    }
     
     students.get(s).moveStud();
   }
@@ -49,11 +61,11 @@ void writeStuds(int n) {
   PrintWriter streSSSstuds = createWriter("streSSS I students.txt");
   for (int s=0; s<n; s++) {
     
-    String str = round(random(0, 10)) + ", " + round(random(0, 50)) + ", " + round(random(0, 10)) + ", ";
+    String str = round(random(10)) + ", " + round(random(50)) + ", " + round(random(10)) + ", ";
     String[] courseOptions = {"Math, ", "Science, ", "Languages, ", "Art, ", "Tech, ", "Gym, "};
     for (int c=0; c<4; c++)
-      str += courseOptions[int(random(0, courseOptions.length))];
-    str += (round(random(300+studRadius, 700-studRadius)) + ", " + (500 + 10*s) + ", " + int(random(0, width)) + ", " + round(random(0, 475)));
+      str += courseOptions[int(random(courseOptions.length))];
+    str += (round(random(300+studRadius, 700-studRadius)) + ", " + (500 + 10*s) + ", " + int(random(width)) + ", " + round(random(0, 475)));
     
     streSSSstuds.println(str);
   }
